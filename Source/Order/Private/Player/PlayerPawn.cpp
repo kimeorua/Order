@@ -14,4 +14,6 @@ void APlayerPawn::BeginPlay()
 	Super::BeginPlay();
 
 	Debug::Print("Player Pawn BeginPlay()");
+
+	Debug::Print("Hi");
 }
