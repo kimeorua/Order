@@ -3,17 +3,30 @@
 
 #include "Player/PlayerPawn.h"
 #include "DebugHelper.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
+#include "OrderFunctionLibrary.h"
 
 APlayerPawn::APlayerPawn()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
+
+	SetRootComponent(CameraBoom);
+	CameraBoom->TargetArmLength = 200.0f;
+	CameraBoom->SocketOffset = FVector(0.0f, 55.0f, 65.0f);
+
+	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
+	FollowCamera->SetupAttachment(CameraBoom);
 }
 
 void APlayerPawn::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Debug::Print("Player Pawn BeginPlay()");
+	UOrderFunctionLibrary::ToggleInputMode(GetWorld(), EOrderInputMode::GameOnly);
 
-	Debug::Print("Hi");
+	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+	{
+		PlayerController->SetShowMouseCursor(true);
+	}
 }

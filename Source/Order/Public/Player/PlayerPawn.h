@@ -6,6 +6,9 @@
 #include "GameFramework/Pawn.h"
 #include "PlayerPawn.generated.h"
 
+class USpringArmComponent;
+class UCameraComponent;
+
 UCLASS()
 class ORDER_API APlayerPawn : public APawn
 {
@@ -16,4 +19,13 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+
+private:
+#pragma region Components
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+	USpringArmComponent* CameraBoom;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+	UCameraComponent* FollowCamera;
+#pragma endregion
 };
