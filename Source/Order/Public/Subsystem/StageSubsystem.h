@@ -3,21 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UnitSubsystem.generated.h"
+#include "StageSubsystem.generated.h"
 
-/**
- * 
- */
-UCLASS(BlueprintType, Blueprintable)
-class ORDER_API UUnitSubsystem : public UGameInstanceSubsystem
+UCLASS()
+class ORDER_API UStageSubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
-	
-private:
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	float tset = 0.0f;
 
 public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
+
+	UFUNCTION()
+	void OnMapLoaded(UWorld* LoadedWorld);
 };
