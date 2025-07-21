@@ -10,10 +10,16 @@ class ORDER_API UStageSubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 
+private:
+	int32 StageLevel = 0;
+
 public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
 
 	UFUNCTION()
 	void OnMapLoaded(UWorld* LoadedWorld);
+
+	UFUNCTION(BlueprintCallable)
+	void StageStart();
 };

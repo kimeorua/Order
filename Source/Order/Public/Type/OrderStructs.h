@@ -4,6 +4,7 @@
 #include "Type/OrderEnums.h"
 #include "OrderStructs.generated.h"
 
+class AEnemyUnit;
 
 USTRUCT(BlueprintType)
 struct FUnitStat
@@ -67,4 +68,28 @@ struct FUnitStatus
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FUnitLevelStat UnitLevelStat;
+};
+
+USTRUCT(BlueprintType)
+struct FEnemyUnitSpawnInfo
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AEnemyUnit> EnemyUnitClass;
+
+	UPROPERTY(EditAnywhere)
+	TArray<FVector> SpawnLocation;
+
+	UPROPERTY(EditAnywhere, meta = (ClampMin = "0", ClampMax = "3", UIMin = "0", UIMax = "3"))
+	int32 SpawnedEnemyNum = 1;
+};
+
+USTRUCT(BlueprintType)
+struct FEnemyUnitSpawnInfoTableRaw : public FTableRowBase
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere)
+	TArray<FEnemyUnitSpawnInfo>EnemySpawnerInfo;
 };

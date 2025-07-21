@@ -2,7 +2,7 @@
 
 
 #include "Subsystem/StageSubsystem.h"
-
+#include "Subsystem/UnitSubsystem.h"
 #include "DebugHelper.h"
 
 void UStageSubsystem::Initialize(FSubsystemCollectionBase& Collection)
@@ -20,6 +20,14 @@ void UStageSubsystem::Deinitialize()
 
 void UStageSubsystem::OnMapLoaded(UWorld* LoadedWorld)
 {
-	Debug::Print("Game Map Is Load");
-	//TODO 스테이지 시작 구현 하기.
+	StageStart();
+}
+
+void UStageSubsystem::StageStart()
+{
+	if (StageLevel < 5)
+	{ 
+		StageLevel++; 
+		if (UUnitSubsystem* UnitSubsystem = GetGameInstance()->GetSubsystem<UUnitSubsystem>()) { UnitSubsystem->OnEnemySpawn.Broadcast(StageLevel); }
+	}
 }

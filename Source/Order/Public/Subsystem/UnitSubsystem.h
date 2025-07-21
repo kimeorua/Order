@@ -3,21 +3,36 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Type/OrderStructs.h"
 #include "UnitSubsystem.generated.h"
 
-/**
- * 
- */
-UCLASS(BlueprintType, Blueprintable)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEnemySpawn, int32, StageLevel);
+
+class ABaseUnit;
+
+UCLASS(Abstract, Blueprintable)
 class ORDER_API UUnitSubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 	
 private:
-	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
-	float tset = 0.0f;
+#pragma region EnemySpawn
+	UPROPERTY(EditDefaultsOnly, Category = "Unit | Enemy Spawn DataTable", meta = (AllowPrivateAccess = "true"))
+	UDataTable* EnemySpawnerDataTable = nullptr;
+
+	FEnemyUnitSpawnInfoTableRaw* GetCurrentStageSpanwerTableRow(int32 StageNum) const;
+	UFUNCTION()
+	void SpawnEnemyUnit(int32 StageLevel);
+#pragma endregion
+
+#pragma region Unit Mangement
+	UPROPERTY(VisibleAnywhere, Category = "Unit | Mangement")
+	TArray<ABaseUnit*>EnemyUnits;
+#pragma endregion
 
 public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
+
+	FOnEnemySpawn OnEnemySpawn;
 };
