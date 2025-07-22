@@ -26,8 +26,15 @@ void UStageSubsystem::OnMapLoaded(UWorld* LoadedWorld)
 void UStageSubsystem::StageStart()
 {
 	if (StageLevel < 5)
-	{ 
-		StageLevel++; 
-		if (UUnitSubsystem* UnitSubsystem = GetGameInstance()->GetSubsystem<UUnitSubsystem>()) { UnitSubsystem->OnEnemySpawn.Broadcast(StageLevel); }
+	{
+		StageLevel++;
+		if (UUnitSubsystem* UnitSubsystem = GetGameInstance()->GetSubsystem<UUnitSubsystem>()) 
+		{
+			UnitSubsystem->OnEnemySpawn.Broadcast(StageLevel); 
+			if (StageLevel == 1 || StageLevel == 2 || StageLevel == 4) 
+			{
+				UnitSubsystem->OnShowUnitSelectUI.Broadcast();
+			}
+		}
 	}
 }

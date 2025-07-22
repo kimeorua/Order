@@ -4,7 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Type/OrderStructs.h"
 #include "PlayerPawn.generated.h"
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnShowUnitSelectUI, FPlayerUnitSelectInfo, Unit_Info_1, FPlayerUnitSelectInfo, Unit_Info_2, FPlayerUnitSelectInfo, Unit_Info_3);
 
 class USpringArmComponent;
 class UCameraComponent;
@@ -17,6 +20,8 @@ class ORDER_API APlayerPawn : public APawn
 public:
 	APlayerPawn();
 
+	UPROPERTY(BlueprintAssignable)
+	FOnShowUnitSelectUI OnShowUnitSelectUI;
 protected:
 	virtual void BeginPlay() override;
 

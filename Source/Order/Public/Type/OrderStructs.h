@@ -5,6 +5,7 @@
 #include "OrderStructs.generated.h"
 
 class AEnemyUnit;
+class APlayerUnit;
 
 USTRUCT(BlueprintType)
 struct FUnitStat
@@ -92,4 +93,19 @@ struct FEnemyUnitSpawnInfoTableRaw : public FTableRowBase
 
 	UPROPERTY(EditAnywhere)
 	TArray<FEnemyUnitSpawnInfo>EnemySpawnerInfo;
+};
+
+USTRUCT(BlueprintType)
+struct FPlayerUnitSelectInfo
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UTexture2D* UnitIcon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<APlayerUnit> PlayerUnitClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	EOrderUnitType UnitType;
 };

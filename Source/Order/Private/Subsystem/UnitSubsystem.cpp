@@ -3,6 +3,7 @@
 
 #include "Subsystem/UnitSubsystem.h"
 #include "OrderGameModeBase.h"
+#include "Player/PlayerPawn.h"
 #include "Unit/EnemyUnit.h"
 
 #include "DebugHelper.h"
@@ -22,11 +23,13 @@ void UUnitSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 	Debug::Print("Init Unit Subsystem");
 
 	OnEnemySpawn.AddDynamic(this, &UUnitSubsystem::SpawnEnemyUnit);
+	OnShowUnitSelectUI.AddDynamic(this, &UUnitSubsystem::SelectedUnit);
 }
 
 void UUnitSubsystem::Deinitialize()
 {
 	OnEnemySpawn.RemoveAll(this);
+	OnShowUnitSelectUI.RemoveAll(this);
 }
 
 void UUnitSubsystem::SpawnEnemyUnit(int32 StageLevel)
@@ -50,6 +53,30 @@ void UUnitSubsystem::SpawnEnemyUnit(int32 StageLevel)
 			}
 		}
 	}
+}
 
-	Debug::Print("Enemy Unit Num :", EnemyUnits.Num());
+void UUnitSubsystem::SelectedUnit()
+{
+	CurrentSelectInfos.Empty();
+
+	TArray<FPlayerUnitSelectInfo> TempPool = SelectInfos;
+
+	for (int32 i = 0; i < 3 && TempPool.Num() > 0; ++i)
+	{
+		int32 RandIndex = FMath::RandRange(0, TempPool.Num() - 1);
+		FPlayerUnitSelectInfo Picked = TempPool[RandIndex];
+		CurrentSelectInfos.Add(Picked);
+		TempPool.RemoveAt(RandIndex);
+	}
+
+	if (const UWorld* World = GetWorld())
+	{
+		if (APlayerController* PC = World->GetFirstPlayerController())
+		{
+			if (APlayerPawn* PlayerPawn = Cast<APlayerPawn>(PC->GetPawn()))
+			{
+				PlayerPawn->OnShowUnitSelectUI.Broadcast(CurrentSelectInfos[0], CurrentSelectInfos[1], CurrentSelectInfos[2]);
+			}
+		}
+	}
 }

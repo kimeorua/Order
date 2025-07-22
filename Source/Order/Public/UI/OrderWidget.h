@@ -6,10 +6,16 @@
 #include "Blueprint/UserWidget.h"
 #include "OrderWidget.generated.h"
 
-class UStageSubsystem;
+class APlayerPawn;
 
 UCLASS()
 class ORDER_API UOrderWidget : public UUserWidget
 {
 	GENERATED_BODY()
+
+protected:
+	virtual void NativeOnInitialized() override;
+
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "On PlayerPawn Setting"))
+	void BP_OnPlayerPawnInitalized(APlayerPawn* Pawn);
 };

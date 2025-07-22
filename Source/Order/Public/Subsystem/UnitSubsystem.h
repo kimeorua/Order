@@ -7,6 +7,7 @@
 #include "UnitSubsystem.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEnemySpawn, int32, StageLevel);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnShowUnitSelectedUI);
 
 class ABaseUnit;
 
@@ -21,8 +22,21 @@ private:
 	UDataTable* EnemySpawnerDataTable = nullptr;
 
 	FEnemyUnitSpawnInfoTableRaw* GetCurrentStageSpanwerTableRow(int32 StageNum) const;
+
 	UFUNCTION()
 	void SpawnEnemyUnit(int32 StageLevel);
+#pragma endregion
+
+#pragma region PlayerSpawn
+	UPROPERTY(EditDefaultsOnly, Category = "Unit | Player Spawn", meta = (AllowPrivateAccess = "true"))
+	TArray<FPlayerUnitSelectInfo> SelectInfos;
+
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TArray<FPlayerUnitSelectInfo> CurrentSelectInfos;
+
+	UFUNCTION()
+	void SelectedUnit();
+
 #pragma endregion
 
 #pragma region Unit Mangement
@@ -35,4 +49,5 @@ public:
 	virtual void Deinitialize() override;
 
 	FOnEnemySpawn OnEnemySpawn;
+	FOnShowUnitSelectedUI OnShowUnitSelectUI;
 };
