@@ -5,6 +5,7 @@
 #include "OrderGameModeBase.h"
 #include "Player/PlayerPawn.h"
 #include "Unit/EnemyUnit.h"
+#include "Unit/PlayerUnit.h"
 
 #include "DebugHelper.h"
 
@@ -79,4 +80,26 @@ void UUnitSubsystem::SelectedUnit()
 			}
 		}
 	}
+}
+
+void UUnitSubsystem::SpawnPlayerUnit(FPlayerUnitSelectInfo SpawnInfo)
+{
+	FActorSpawnParameters Parameters;
+	Parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+	APlayerUnit* SpawndUnit = GetWorld()->SpawnActor<APlayerUnit>(SpawnInfo.PlayerUnitClass, Parameters);
+
+	if (IsValid(SpawndUnit))
+	{
+		SpawndUnit->SetActorLocation(PlayerUnitSpawnLocations[SpawnNum]);
+		FRotator Rot = FRotator(0.f, 90.0f, 0.0f);
+		SpawndUnit->SetActorRotation(Rot);
+		SpawnNum++;
+
+		SelectInfos.Remove(SpawnInfo);
+		CurrentSelectInfos.Empty();
+
+		PlayerUnits.Add(SpawndUnit);
+	}
+	else { return; }
 }

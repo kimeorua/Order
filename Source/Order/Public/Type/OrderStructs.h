@@ -2,6 +2,7 @@
 
 #pragma once
 #include "Type/OrderEnums.h"
+#include "Unit/PlayerUnit.h"
 #include "OrderStructs.generated.h"
 
 class AEnemyUnit;
@@ -108,4 +109,9 @@ struct FPlayerUnitSelectInfo
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	EOrderUnitType UnitType;
+
+	bool operator==(const FPlayerUnitSelectInfo& Other) const
+	{
+		return UnitIcon == Other.UnitIcon && PlayerUnitClass == Other.PlayerUnitClass && UnitType == Other.UnitType;
+	}
 };

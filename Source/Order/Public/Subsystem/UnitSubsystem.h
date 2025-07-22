@@ -10,6 +10,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEnemySpawn, int32, StageLevel);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnShowUnitSelectedUI);
 
 class ABaseUnit;
+class APlayerUnit;
 
 UCLASS(Abstract, Blueprintable)
 class ORDER_API UUnitSubsystem : public UGameInstanceSubsystem
@@ -31,17 +32,26 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Unit | Player Spawn", meta = (AllowPrivateAccess = "true"))
 	TArray<FPlayerUnitSelectInfo> SelectInfos;
 
-	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, Category = "Unit | Player Spawn", meta = (AllowPrivateAccess = "true"))
+	TArray<FVector>PlayerUnitSpawnLocations;
+
 	TArray<FPlayerUnitSelectInfo> CurrentSelectInfos;
 
 	UFUNCTION()
 	void SelectedUnit();
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnPlayerUnit(FPlayerUnitSelectInfo SpawnInfo);
+
+	int SpawnNum = 0;
 
 #pragma endregion
 
 #pragma region Unit Mangement
 	UPROPERTY(VisibleAnywhere, Category = "Unit | Mangement")
 	TArray<ABaseUnit*>EnemyUnits;
+	UPROPERTY(VisibleAnywhere, Category = "Unit | Mangement")
+	TArray<ABaseUnit*>PlayerUnits;
 #pragma endregion
 
 public:
