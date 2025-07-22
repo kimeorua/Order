@@ -13,5 +13,7 @@ UCLASS()
 class ORDER_API AEnemyUnit : public ABaseUnit
 {
 	GENERATED_BODY()
-	
+
+protected:
+	virtual void BeginPlay() override;
 };

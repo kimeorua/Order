@@ -28,5 +28,6 @@ void APlayerPawn::BeginPlay()
 	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
 	{
 		PlayerController->SetShowMouseCursor(true);
+		PlayerController->bEnableMouseOverEvents = true;
 	}
 }

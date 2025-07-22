@@ -2,4 +2,9 @@
 
 
 #include "Unit/PlayerUnit.h"
+#include "Components/CapsuleComponent.h"
 
+void APlayerUnit::BeginPlay()
+{
+	Super::BeginPlay();
+}

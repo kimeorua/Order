@@ -34,6 +34,12 @@ public:
 	virtual UUIComponent* GetUIComponent() override;
 	//~ End IUIInterface
 
+	UFUNCTION()
+	virtual void UnitMouseOver(UPrimitiveComponent* TouchedComp);
+
+	UFUNCTION()
+	virtual void UnitMouseEnd(UPrimitiveComponent* TouchedComp);
+
 protected:
 	virtual void BeginPlay() override;
 

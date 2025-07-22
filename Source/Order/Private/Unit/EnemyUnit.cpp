@@ -2,4 +2,9 @@
 
 
 #include "Unit/EnemyUnit.h"
+#include "Components/CapsuleComponent.h"
 
+void AEnemyUnit::BeginPlay()
+{
+	Super::BeginPlay();
+}
