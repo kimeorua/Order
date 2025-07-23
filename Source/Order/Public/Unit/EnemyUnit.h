@@ -14,6 +14,9 @@ class ORDER_API AEnemyUnit : public ABaseUnit
 {
 	GENERATED_BODY()
 
+public:
+	virtual void UnitMouseOver(UPrimitiveComponent* TouchedComp) override;
+
 protected:
 	virtual void BeginPlay() override;
 };

@@ -8,3 +8,8 @@ void APlayerUnit::BeginPlay()
 {
 	Super::BeginPlay();
 }
+void APlayerUnit::UnitMouseOver(UPrimitiveComponent* TouchedComp)
+{
+	Super::UnitMouseOver(TouchedComp);
+	GetMesh()->SetCustomDepthStencilValue(0);
+}
