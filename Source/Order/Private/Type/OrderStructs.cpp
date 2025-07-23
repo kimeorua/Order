@@ -6,5 +6,4 @@
 void FUnitStat::Init()
 {
 	HP = MaxHP;
-	AP = MaxAP;
 }

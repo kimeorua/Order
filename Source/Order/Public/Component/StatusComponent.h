@@ -12,6 +12,12 @@ class ORDER_API UStatusComponent : public UOrderExtensionComponent
 {
 	GENERATED_BODY()
 	
+public:
+	FORCEINLINE FUnitStat GetUnitStat() const { return UnitStatus.UnitStat; }
+
+protected:
+	virtual void BeginPlay() override;
+
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Unit | Status", meta = (AllowPrivateAccess = "true"))
 	FUnitStatus UnitStatus;

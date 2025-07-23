@@ -14,19 +14,19 @@ struct FUnitStat
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere,  BlueprintReadOnly)
-	float HP = 1.0f;
+	int32 HP = 10;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float MaxHP = 100.0f;
+	int32 MaxHP = 100;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float AP = 2.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float ATK = 100.0f;
+	int32 ATK = 100;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float DEF = 100.0f;
+	int32 DEF = 100;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float APResilience = 0.5f;
@@ -52,7 +52,7 @@ struct FUnitLevelStat
 
 	static  constexpr float MaxRiseRate = 1.0f;
 
-	static  constexpr float LevelUpStat = 200.0f;
+	static  constexpr int32 LevelUpStat = 200;
 
 	static  constexpr int32 MaxLevel = 5;
 };

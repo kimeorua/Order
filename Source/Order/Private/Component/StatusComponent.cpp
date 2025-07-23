@@ -3,3 +3,8 @@
 
 #include "Component/StatusComponent.h"
 
+void UStatusComponent::BeginPlay()
+{
+	Super::BeginPlay();
+	UnitStatus.UnitStat.Init();
+}

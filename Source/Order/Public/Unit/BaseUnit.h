@@ -13,6 +13,7 @@
 class UCombatComponent;
 class UStatusComponent;
 class UUIComponent;
+class UWidgetComponent;
 
 UCLASS()
 class ORDER_API ABaseUnit : public ACharacter, public ICombatInterface, public IStatusInterface, public IUIInterface
@@ -54,6 +55,11 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Unit|Component", meta = (AllowPrivateAccess = "true"))
 	UUIComponent* UIComponent;
+#pragma endregion
+
+#pragma region UI
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon|Class", meta = (AllowPrivateAccess = "true"))
+	UWidgetComponent* UnitStatsBar;
 #pragma endregion
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Unit|TeamType", meta = (AllowPrivateAccess = "true"))
