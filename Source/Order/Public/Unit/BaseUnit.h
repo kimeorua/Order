@@ -8,12 +8,35 @@
 #include "Interface/UIInterface.h"
 #include "Interface/StatusInterface.h"
 #include "Type/OrderEnums.h"
+#include "Unit/UnitWeapon.h"
 #include "BaseUnit.generated.h"
 
 class UCombatComponent;
 class UStatusComponent;
 class UUIComponent;
 class UWidgetComponent;
+class AUnitWeapon;
+
+USTRUCT(BlueprintType)
+struct FUnitWeaponInfo
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	bool bIsDual = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<AUnitWeapon>MainWeaponClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FName MainEquipSocket = "";
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (EditCondition = "bIsDual == true"))
+	TSubclassOf<AUnitWeapon>SubWeaponClass;
+
+	UPROPERTY(EditAnywhere, meta = (EditCondition = "bIsDual == true"))
+	FName SubEquipSocket = "";
+};
 
 UCLASS()
 class ORDER_API ABaseUnit : public ACharacter, public ICombatInterface, public IStatusInterface, public IUIInterface
@@ -58,8 +81,21 @@ private:
 #pragma endregion
 
 #pragma region UI
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon|Class", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Unit|UI", meta = (AllowPrivateAccess = "true"))
 	UWidgetComponent* UnitStatsBar;
+#pragma endregion
+
+#pragma region Weapon
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Unit|Weapon", meta = (AllowPrivateAccess = "true"))
+	FUnitWeaponInfo UnitWeaponInfo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Unit|Weapon", meta = (AllowPrivateAccess = "true"))
+	AUnitWeapon* MainWeapon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Unit|Weapon", meta = (AllowPrivateAccess = "true"))
+	AUnitWeapon* SubWeapon;
+
+	AUnitWeapon* SpawnAndAttachWeapon(bool bIsMain = false);
 #pragma endregion
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Unit|TeamType", meta = (AllowPrivateAccess = "true"))

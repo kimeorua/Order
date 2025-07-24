@@ -42,11 +42,39 @@ UUIComponent* ABaseUnit::GetUIComponent()
 void ABaseUnit::UnitMouseOver(UPrimitiveComponent* TouchedComp)
 {
 	GetMesh()->SetRenderCustomDepth(true);
+
+	if (MainWeapon) 
+	{
+		MainWeapon->GetMesh()->SetRenderCustomDepth(true); 
+		if (Team == EOrderTeamType::Player)
+		{
+			MainWeapon->GetMesh()->SetCustomDepthStencilValue(0);
+		}
+		else
+		{
+			MainWeapon->GetMesh()->SetCustomDepthStencilValue(1);
+		}
+	}
+	if (SubWeapon) 
+	{ 
+		SubWeapon->GetMesh()->SetRenderCustomDepth(true);	
+		if (Team == EOrderTeamType::Player)
+		{
+			SubWeapon->GetMesh()->SetCustomDepthStencilValue(0);
+		}
+		else
+		{
+			SubWeapon->GetMesh()->SetCustomDepthStencilValue(1);
+		}
+	}
 }
 
 void ABaseUnit::UnitMouseEnd(UPrimitiveComponent* TouchedComp)
 {
 	GetMesh()->SetRenderCustomDepth(false);
+
+	if (MainWeapon) { MainWeapon->GetMesh()->SetRenderCustomDepth(false); }
+	if (SubWeapon) { SubWeapon->GetMesh()->SetRenderCustomDepth(false); }
 }
 
 void ABaseUnit::BeginPlay()
@@ -66,4 +94,33 @@ void ABaseUnit::BeginPlay()
 		GetUIComponent()->OnChangeHP.Broadcast(HPPsersent, GetStatusComponent()->GetUnitStat().HP, GetStatusComponent()->GetUnitStat().MaxHP);
 		GetUIComponent()->OnChangeAP.Broadcast(APPersent, GetStatusComponent()->GetUnitStat().AP, GetStatusComponent()->GetUnitStat().MaxAP);
 	}
+
+	MainWeapon = SpawnAndAttachWeapon(true);
+	if (UnitWeaponInfo.bIsDual)
+	{
+		SubWeapon = SpawnAndAttachWeapon(false);
+	}
+}
+
+AUnitWeapon* ABaseUnit::SpawnAndAttachWeapon(bool bIsMain)
+{
+	AUnitWeapon* Weapon = nullptr;
+
+	FActorSpawnParameters Parameters;
+	Parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+	if (bIsMain)
+	{
+		if (! UnitWeaponInfo.MainWeaponClass) { return nullptr; }
+		Weapon = GetWorld()->SpawnActor<AUnitWeapon>(UnitWeaponInfo.MainWeaponClass, Parameters);
+		Weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, UnitWeaponInfo.MainEquipSocket);
+	}
+	else
+	{
+		if (!UnitWeaponInfo.SubWeaponClass) { return nullptr; }
+		Weapon = GetWorld()->SpawnActor<AUnitWeapon>(UnitWeaponInfo.SubWeaponClass, Parameters);
+		Weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, UnitWeaponInfo.SubEquipSocket);
+	}
+
+	return Weapon;
 }
