@@ -20,21 +20,16 @@ struct FUnitStat
 	int32 MaxHP = 100;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float AP = 2.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 ATK = 100;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 DEF = 100;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	float APResilience = 0.5f;
+	int32 APResilience = 3;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float CriticalChance = 30.0f;
-
-	static  constexpr float MaxAP = 2.0f;
 
 	void Init();
 };
@@ -63,7 +58,7 @@ struct FUnitStatus
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	EOrderUnitType UnitType = EOrderUnitType::Tanker;
+	EOrderUnitType UnitType = EOrderUnitType::Dealer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FUnitStat UnitStat;

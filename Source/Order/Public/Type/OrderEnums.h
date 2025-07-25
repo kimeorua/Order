@@ -19,7 +19,7 @@ enum class EOrderTeamType : uint8
 UENUM(BlueprintType)
 enum class EOrderUnitType : uint8
 {
-	Tanker UMETA(DisplayName = "Tanker"),
+	Buffer UMETA(DisplayName = "Buffer"),
 	Dealer UMETA(DisplayName = "Dealer"),
-	Supporter UMETA(DisplayName = "Supporter")
+	Mage UMETA(DisplayName = "Mage")
 };

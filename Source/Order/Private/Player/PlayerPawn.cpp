@@ -30,4 +30,6 @@ void APlayerPawn::BeginPlay()
 		PlayerController->SetShowMouseCursor(true);
 		PlayerController->bEnableMouseOverEvents = true;
 	}
+
+	AP = MaxAP;
 }

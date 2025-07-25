@@ -89,10 +89,7 @@ void ABaseUnit::BeginPlay()
 		StatusWidget->InitAndCreateUnitWidget(this);
 
 		float HPPsersent = GetStatusComponent()->GetUnitStat().HP / GetStatusComponent()->GetUnitStat().MaxHP;
-		float APPersent = GetStatusComponent()->GetUnitStat().AP / GetStatusComponent()->GetUnitStat().MaxAP;
-
 		GetUIComponent()->OnChangeHP.Broadcast(HPPsersent, GetStatusComponent()->GetUnitStat().HP, GetStatusComponent()->GetUnitStat().MaxHP);
-		GetUIComponent()->OnChangeAP.Broadcast(APPersent, GetStatusComponent()->GetUnitStat().AP, GetStatusComponent()->GetUnitStat().MaxAP);
 	}
 
 	MainWeapon = SpawnAndAttachWeapon(true);

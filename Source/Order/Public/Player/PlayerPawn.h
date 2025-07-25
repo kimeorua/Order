@@ -33,4 +33,10 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
 #pragma endregion
+
+#pragma region Game
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AP", meta = (AllowPrivateAccess = "true"))
+	int32 AP = 0;
+
+	static constexpr int32 MaxAP = 10;
 };
