@@ -8,6 +8,10 @@
 #include "Components/CapsuleComponent.h"
 #include "UI/OrderUnitWidget.h"
 #include "Components/WidgetComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
+#include "OrderFunctionLibrary.h"
+#include "Player/PlayerPawn.h"
 
 #include "DebugHelper.h"
 
@@ -22,6 +26,14 @@ ABaseUnit::ABaseUnit()
 
 	UnitStatsBar = CreateDefaultSubobject<UWidgetComponent>(TEXT("UnitStatsBar"));
 	UnitStatsBar->SetupAttachment(GetMesh());
+
+	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
+	CameraBoom->TargetArmLength = 100.0f;
+	CameraBoom->SocketOffset = FVector(0.0f, 25.0f, 30.0f);
+	CameraBoom->SetupAttachment(GetRootComponent());
+
+	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
+	FollowCamera->SetupAttachment(CameraBoom);
 }
 
 UCombatComponent* ABaseUnit::GetCombatComponent()
@@ -77,13 +89,32 @@ void ABaseUnit::UnitMouseEnd(UPrimitiveComponent* TouchedComp)
 	if (SubWeapon) { SubWeapon->GetMesh()->SetRenderCustomDepth(false); }
 }
 
+void ABaseUnit::UnitClick(AActor* TouchedActor, FKey ButtonPressed)
+{
+	UOrderFunctionLibrary::ToggleInputMode(this, EOrderInputMode::UIOnly);
+
+	APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
+	APlayerPawn* Pawn = Cast<APlayerPawn>(PC->GetPawn());
+	Pawn->OnShowBackButton.Broadcast();
+}
+
 void ABaseUnit::BeginPlay()
 {
 	Super::BeginPlay();
 
+	OnClicked.AddDynamic(this, &ABaseUnit::UnitClick);
 	GetCapsuleComponent()->OnBeginCursorOver.AddDynamic(this, &ABaseUnit::UnitMouseOver);
 	GetCapsuleComponent()->OnEndCursorOver.AddDynamic(this, &ABaseUnit::UnitMouseEnd);
 
+	MainWeapon = SpawnAndAttachWeapon(true);
+	if (UnitWeaponInfo.bIsDual)
+	{
+		SubWeapon = SpawnAndAttachWeapon(false);
+	}
+}
+
+void ABaseUnit::ShowUnitUI()
+{
 	if (UOrderUnitWidget* StatusWidget = Cast<UOrderUnitWidget>(UnitStatsBar->GetUserWidgetObject()))
 	{
 		StatusWidget->InitAndCreateUnitWidget(this);
@@ -92,11 +123,10 @@ void ABaseUnit::BeginPlay()
 		GetUIComponent()->OnChangeHP.Broadcast(HPPsersent, GetStatusComponent()->GetUnitStat().HP, GetStatusComponent()->GetUnitStat().MaxHP);
 	}
 
-	MainWeapon = SpawnAndAttachWeapon(true);
-	if (UnitWeaponInfo.bIsDual)
-	{
-		SubWeapon = SpawnAndAttachWeapon(false);
-	}
+	GetMesh()->SetRenderCustomDepth(false);
+
+	if (MainWeapon) { MainWeapon->GetMesh()->SetRenderCustomDepth(false); }
+	if (SubWeapon) { SubWeapon->GetMesh()->SetRenderCustomDepth(false); }
 }
 
 AUnitWeapon* ABaseUnit::SpawnAndAttachWeapon(bool bIsMain)

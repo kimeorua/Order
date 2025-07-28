@@ -26,9 +26,11 @@ void UOrderFunctionLibrary::ToggleInputMode(const UObject* WorldContextObject, E
 	{
 	case EOrderInputMode::GameOnly:
 		PlayerController->SetInputMode(GameOnlyMode);
+		PlayerController->bEnableMouseOverEvents = true;
 		break;
 	case EOrderInputMode::UIOnly:
 		PlayerController->SetInputMode(UIOnly);
+		PlayerController->bEnableMouseOverEvents = false;
 		break;
 	default:
 		break;

@@ -8,6 +8,8 @@
 #include "PlayerPawn.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnShowUnitSelectUI, FPlayerUnitSelectInfo, Unit_Info_1, FPlayerUnitSelectInfo, Unit_Info_2, FPlayerUnitSelectInfo, Unit_Info_3);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnChangedAP, int32, CurrentAP);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnShowBackButton);
 
 class USpringArmComponent;
 class UCameraComponent;
@@ -22,6 +24,13 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnShowUnitSelectUI OnShowUnitSelectUI;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnChangedAP OnChangedAP;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnShowBackButton OnShowBackButton;
+
 protected:
 	virtual void BeginPlay() override;
 

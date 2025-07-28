@@ -16,7 +16,7 @@ class ORDER_API APlayerUnit : public ABaseUnit
 
 public:
 	virtual void UnitMouseOver(UPrimitiveComponent* TouchedComp) override;
-
+	virtual void UnitClick(AActor* TouchedActor, FKey ButtonPressed) override;
 protected:
 	virtual void BeginPlay() override;
 };

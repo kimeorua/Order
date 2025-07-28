@@ -16,6 +16,9 @@ class UStatusComponent;
 class UUIComponent;
 class UWidgetComponent;
 class AUnitWeapon;
+class USpringArmComponent;
+class UCameraComponent;
+
 
 USTRUCT(BlueprintType)
 struct FUnitWeaponInfo
@@ -64,9 +67,12 @@ public:
 	UFUNCTION()
 	virtual void UnitMouseEnd(UPrimitiveComponent* TouchedComp);
 
+	UFUNCTION()
+	virtual void UnitClick(AActor* TouchedActor, FKey ButtonPressed);
+
 protected:
 	virtual void BeginPlay() override;
-
+	void ShowUnitUI();
 private:
 
 #pragma region Component
@@ -78,6 +84,12 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Unit|Component", meta = (AllowPrivateAccess = "true"))
 	UUIComponent* UIComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+	USpringArmComponent* CameraBoom;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+	UCameraComponent* FollowCamera;
 #pragma endregion
 
 #pragma region UI
@@ -100,4 +112,7 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Unit|TeamType", meta = (AllowPrivateAccess = "true"))
 	EOrderTeamType Team = EOrderTeamType::Player;
+
+	UPROPERTY()
+	bool bIsClick = false;
 };

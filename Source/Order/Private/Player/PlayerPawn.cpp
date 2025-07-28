@@ -29,7 +29,9 @@ void APlayerPawn::BeginPlay()
 	{
 		PlayerController->SetShowMouseCursor(true);
 		PlayerController->bEnableMouseOverEvents = true;
+		PlayerController->bEnableClickEvents = true;
 	}
 
 	AP = MaxAP;
+	OnChangedAP.Broadcast(AP);
 }
