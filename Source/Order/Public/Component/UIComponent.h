@@ -8,6 +8,8 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnChangeHP, float, Persent, int32, CurrentHP, int32, MaxHP);
 
+class UOrderUnitWidget;
+
 UCLASS()
 class ORDER_API UUIComponent : public UOrderExtensionComponent
 {
@@ -16,4 +18,13 @@ class ORDER_API UUIComponent : public UOrderExtensionComponent
 public:
 	UPROPERTY(BlueprintAssignable)
 	FOnChangeHP OnChangeHP;
+
+	void ShowHoverUI();
+	void RemoveHoverUI();
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "Unit | UI", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UOrderUnitWidget> HoverUIClass;
+
+	UOrderUnitWidget* HoverUI = nullptr;
 };

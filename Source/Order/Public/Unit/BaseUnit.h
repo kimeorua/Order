@@ -72,7 +72,6 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	void ShowUnitUI();
 private:
 
 #pragma region Component
@@ -90,11 +89,6 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
-#pragma endregion
-
-#pragma region UI
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Unit|UI", meta = (AllowPrivateAccess = "true"))
-	UWidgetComponent* UnitStatsBar;
 #pragma endregion
 
 #pragma region Weapon

@@ -23,7 +23,6 @@ void APlayerUnit::UnitClick(AActor* TouchedActor, FKey ButtonPressed)
 	APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
 	PC->SetViewTargetWithBlend(this, 0.45f);
 
-	FTimerHandle BlendFinishTimer;
-	GetWorld()->GetTimerManager().SetTimer(BlendFinishTimer, this, &APlayerUnit::ShowUnitUI, 0.45f, false);
-
+	//FTimerHandle BlendFinishTimer;
+	//GetWorld()->GetTimerManager().SetTimer(BlendFinishTimer, this, &APlayerUnit::Func, 0.45f, false);
 }

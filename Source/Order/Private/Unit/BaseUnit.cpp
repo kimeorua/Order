@@ -24,9 +24,6 @@ ABaseUnit::ABaseUnit()
 
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
 
-	UnitStatsBar = CreateDefaultSubobject<UWidgetComponent>(TEXT("UnitStatsBar"));
-	UnitStatsBar->SetupAttachment(GetMesh());
-
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->TargetArmLength = 100.0f;
 	CameraBoom->SocketOffset = FVector(0.0f, 25.0f, 30.0f);
@@ -79,6 +76,9 @@ void ABaseUnit::UnitMouseOver(UPrimitiveComponent* TouchedComp)
 			SubWeapon->GetMesh()->SetCustomDepthStencilValue(1);
 		}
 	}
+	GetUIComponent()->ShowHoverUI();
+	float HPPsersent = GetStatusComponent()->GetUnitStat().HP / GetStatusComponent()->GetUnitStat().MaxHP;
+	GetUIComponent()->OnChangeHP.Broadcast(HPPsersent, GetStatusComponent()->GetUnitStat().HP, GetStatusComponent()->GetUnitStat().MaxHP);
 }
 
 void ABaseUnit::UnitMouseEnd(UPrimitiveComponent* TouchedComp)
@@ -87,6 +87,8 @@ void ABaseUnit::UnitMouseEnd(UPrimitiveComponent* TouchedComp)
 
 	if (MainWeapon) { MainWeapon->GetMesh()->SetRenderCustomDepth(false); }
 	if (SubWeapon) { SubWeapon->GetMesh()->SetRenderCustomDepth(false); }
+
+	GetUIComponent()->RemoveHoverUI();
 }
 
 void ABaseUnit::UnitClick(AActor* TouchedActor, FKey ButtonPressed)
@@ -96,6 +98,13 @@ void ABaseUnit::UnitClick(AActor* TouchedActor, FKey ButtonPressed)
 	APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
 	APlayerPawn* Pawn = Cast<APlayerPawn>(PC->GetPawn());
 	Pawn->OnShowBackButton.Broadcast();
+
+	GetMesh()->SetRenderCustomDepth(false);
+
+	if (MainWeapon) { MainWeapon->GetMesh()->SetRenderCustomDepth(false); }
+	if (SubWeapon) { SubWeapon->GetMesh()->SetRenderCustomDepth(false); }
+
+	GetUIComponent()->RemoveHoverUI();
 }
 
 void ABaseUnit::BeginPlay()
@@ -111,22 +120,6 @@ void ABaseUnit::BeginPlay()
 	{
 		SubWeapon = SpawnAndAttachWeapon(false);
 	}
-}
-
-void ABaseUnit::ShowUnitUI()
-{
-	if (UOrderUnitWidget* StatusWidget = Cast<UOrderUnitWidget>(UnitStatsBar->GetUserWidgetObject()))
-	{
-		StatusWidget->InitAndCreateUnitWidget(this);
-
-		float HPPsersent = GetStatusComponent()->GetUnitStat().HP / GetStatusComponent()->GetUnitStat().MaxHP;
-		GetUIComponent()->OnChangeHP.Broadcast(HPPsersent, GetStatusComponent()->GetUnitStat().HP, GetStatusComponent()->GetUnitStat().MaxHP);
-	}
-
-	GetMesh()->SetRenderCustomDepth(false);
-
-	if (MainWeapon) { MainWeapon->GetMesh()->SetRenderCustomDepth(false); }
-	if (SubWeapon) { SubWeapon->GetMesh()->SetRenderCustomDepth(false); }
 }
 
 AUnitWeapon* ABaseUnit::SpawnAndAttachWeapon(bool bIsMain)
