@@ -58,6 +58,8 @@ public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
 
+	UPROPERTY(BlueprintCallable)
 	FOnEnemySpawn OnEnemySpawn;
+
 	FOnShowUnitSelectedUI OnShowUnitSelectUI;
 };

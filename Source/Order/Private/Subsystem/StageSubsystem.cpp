@@ -28,12 +28,16 @@ void UStageSubsystem::StageStart()
 	if (StageLevel < 5)
 	{
 		StageLevel++;
-		if (UUnitSubsystem* UnitSubsystem = GetGameInstance()->GetSubsystem<UUnitSubsystem>()) 
+		if (UUnitSubsystem* UnitSubsystem = GetGameInstance()->GetSubsystem<UUnitSubsystem>())
 		{
-			UnitSubsystem->OnEnemySpawn.Broadcast(StageLevel); 
-			if (StageLevel == 1 || StageLevel == 2 || StageLevel == 4) 
+			if (StageLevel == 1 || StageLevel == 2 || StageLevel == 4)
 			{
 				UnitSubsystem->OnShowUnitSelectUI.Broadcast();
+			}
+			else
+			{
+				OnStageStart.Broadcast();
+				UnitSubsystem->OnEnemySpawn.Broadcast(StageLevel);
 			}
 		}
 	}
