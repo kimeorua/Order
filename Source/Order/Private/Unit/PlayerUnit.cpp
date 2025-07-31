@@ -12,14 +12,6 @@
 
 APlayerUnit::APlayerUnit()
 {
-	StatusWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("StatusWidget"));
-	StatusWidget->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, TEXT("HP_UI_Socket"));
-}
-
-void APlayerUnit::ShowUnitClickUI()
-{
-	float HPPsersent = GetStatusComponent()->GetUnitStat().HP / GetStatusComponent()->GetUnitStat().MaxHP;
-	GetUIComponent()->OnShowUnitStatusBar.Broadcast(HPPsersent);
 }
 
 void APlayerUnit::UnitMouseOver(UPrimitiveComponent* TouchedComp)
@@ -34,13 +26,9 @@ void APlayerUnit::UnitClick(AActor* TouchedActor, FKey ButtonPressed)
 
 	APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
 	PC->SetViewTargetWithBlend(this, 0.45f);
-
-	ShowUnitClickUI();
 }
 
 void APlayerUnit::BeginPlay()
 {
 	Super::BeginPlay();
-
-	if (UOrderUnitWidget* UnitUI = Cast<UOrderUnitWidget>(StatusWidget->GetUserWidgetObject())) { UnitUI->InitAndCreateUnitWidget(this); }
 }

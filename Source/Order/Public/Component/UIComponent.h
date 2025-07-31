@@ -7,7 +7,6 @@
 #include "UIComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnChangeHP, float, Persent, int32, CurrentHP, int32, MaxHP);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnShowUnitStatusBar, float, Persent);
 
 class UOrderUnitWidget;
 
@@ -19,9 +18,6 @@ class ORDER_API UUIComponent : public UOrderExtensionComponent
 public:
 	UPROPERTY(BlueprintAssignable)
 	FOnChangeHP OnChangeHP;
-
-	UPROPERTY(BlueprintAssignable)
-	FOnShowUnitStatusBar OnShowUnitStatusBar;
 
 	void ShowHoverUI();
 	void RemoveHoverUI();

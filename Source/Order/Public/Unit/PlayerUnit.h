@@ -20,12 +20,4 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	APlayerUnit();
-
-private:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Unit|Component", meta = (AllowPrivateAccess = "true"))
-	UWidgetComponent* StatusWidget;
-
-	UFUNCTION()
-	void ShowUnitClickUI();
-
 };
