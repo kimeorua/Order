@@ -7,7 +7,6 @@
 #include "Component/UIComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "UI/OrderUnitWidget.h"
-#include "Components/WidgetComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "OrderFunctionLibrary.h"

@@ -6,9 +6,8 @@
 #include "Unit/BaseUnit.h"
 #include "PlayerUnit.generated.h"
 
-/**
- * 
- */
+class UWidgetComponent;
+
 UCLASS()
 class ORDER_API APlayerUnit : public ABaseUnit
 {
@@ -17,6 +16,16 @@ class ORDER_API APlayerUnit : public ABaseUnit
 public:
 	virtual void UnitMouseOver(UPrimitiveComponent* TouchedComp) override;
 	virtual void UnitClick(AActor* TouchedActor, FKey ButtonPressed) override;
+
 protected:
 	virtual void BeginPlay() override;
+	APlayerUnit();
+
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Unit|Component", meta = (AllowPrivateAccess = "true"))
+	UWidgetComponent* StatusWidget;
+
+	UFUNCTION()
+	void ShowUnitClickUI();
+
 };

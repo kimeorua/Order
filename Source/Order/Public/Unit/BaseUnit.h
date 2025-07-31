@@ -14,7 +14,6 @@
 class UCombatComponent;
 class UStatusComponent;
 class UUIComponent;
-class UWidgetComponent;
 class AUnitWeapon;
 class USpringArmComponent;
 class UCameraComponent;
