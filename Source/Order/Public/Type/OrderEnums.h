@@ -23,3 +23,14 @@ enum class EOrderUnitType : uint8
 	Dealer UMETA(DisplayName = "Dealer"),
 	Mage UMETA(DisplayName = "Mage")
 };
+
+UENUM(BlueprintType)
+enum class EOrderTurnType : uint8
+{
+	Begin UMETA(DisplayName = "Begin"),
+	Player UMETA(DisplayName = "Player"),
+	Enemy UMETA(DisplayName = "Enemy"),
+	Battle UMETA(DisplayName = "Battle"),
+	End UMETA(DisplayName = "End"),
+	None  UMETA(DisplayName = "None")
+};

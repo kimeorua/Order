@@ -2,6 +2,7 @@
 
 
 #include "Subsystem/StageSubsystem.h"
+#include "Subsystem/BattleSubsystem.h"
 #include "Subsystem/UnitSubsystem.h"
 #include "DebugHelper.h"
 
@@ -38,6 +39,10 @@ void UStageSubsystem::StageStart()
 			{
 				OnStageStart.Broadcast();
 				UnitSubsystem->OnEnemySpawn.Broadcast(StageLevel);
+				if (UBattleSubsystem* BattleSubsystem = GetGameInstance()->GetSubsystem<UBattleSubsystem>())
+				{
+					BattleSubsystem->TurnChange(EOrderTurnType::Begin);
+				}
 			}
 		}
 	}

@@ -25,13 +25,7 @@ void APlayerPawn::BeginPlay()
 
 	UOrderFunctionLibrary::ToggleInputMode(GetWorld(), EOrderInputMode::GameOnly);
 
-	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
-	{
-		PlayerController->SetShowMouseCursor(true);
-		PlayerController->bEnableMouseOverEvents = true;
-		PlayerController->bEnableClickEvents = true;
-	}
-
+	if (APlayerController* PlayerController = Cast<APlayerController>(GetController())) { PlayerController->SetShowMouseCursor(true); }
 	AP = MaxAP;
 	OnChangedAP.Broadcast(AP);
 }

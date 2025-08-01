@@ -26,13 +26,37 @@ void UOrderFunctionLibrary::ToggleInputMode(const UObject* WorldContextObject, E
 	{
 	case EOrderInputMode::GameOnly:
 		PlayerController->SetInputMode(GameOnlyMode);
-		PlayerController->bEnableMouseOverEvents = true;
 		break;
 	case EOrderInputMode::UIOnly:
 		PlayerController->SetInputMode(UIOnly);
-		PlayerController->bEnableMouseOverEvents = false;
 		break;
 	default:
 		break;
+	}
+}
+
+void UOrderFunctionLibrary::ToggleMouseEvent(const UObject* WorldContextObject, bool bEventable)
+{
+	APlayerController* PlayerController = nullptr;
+	if (GEngine)
+	{
+		UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
+
+		if (World)
+		{
+			PlayerController = World->GetFirstPlayerController();
+		}
+	}
+	if (!PlayerController) { return; }
+
+	if (bEventable)
+	{
+		PlayerController->bEnableClickEvents = true;
+		PlayerController->bEnableMouseOverEvents = true;
+	}
+	else
+	{
+		PlayerController->bEnableClickEvents = false;
+		PlayerController->bEnableMouseOverEvents = false;
 	}
 }

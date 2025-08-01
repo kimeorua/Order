@@ -18,4 +18,7 @@ class ORDER_API UOrderFunctionLibrary : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintCallable, Category = "TurnBasedGame | Function Library", meta = (WorldContext = "WorldContextObject"))
 	static void ToggleInputMode(const UObject* WorldContextObject, EOrderInputMode InInputMode);
+
+	UFUNCTION(BlueprintCallable, Category = "TurnBasedGame | Function Library", meta = (WorldContext = "WorldContextObject"))
+	static void ToggleMouseEvent(const UObject* WorldContextObject, bool bEventable);
 };

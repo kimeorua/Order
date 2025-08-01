@@ -24,8 +24,8 @@ ABaseUnit::ABaseUnit()
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
 
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
-	CameraBoom->TargetArmLength = 100.0f;
-	CameraBoom->SocketOffset = FVector(0.0f, 25.0f, 30.0f);
+	CameraBoom->TargetArmLength = 130.0f;
+	CameraBoom->SocketOffset = FVector(0.0f, 120.0f, 80.0f);
 	CameraBoom->SetupAttachment(GetRootComponent());
 
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
