@@ -104,6 +104,8 @@ void ABaseUnit::UnitClick(AActor* TouchedActor, FKey ButtonPressed)
 	if (SubWeapon) { SubWeapon->GetMesh()->SetRenderCustomDepth(false); }
 
 	GetUIComponent()->RemoveHoverUI();
+
+	UOrderFunctionLibrary::ToggleMouseEvent(this, false);
 }
 
 void ABaseUnit::BeginPlay()

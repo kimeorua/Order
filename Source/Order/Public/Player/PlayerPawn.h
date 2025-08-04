@@ -10,6 +10,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnShowUnitSelectUI, FPlayerUnitSelectInfo, Unit_Info_1, FPlayerUnitSelectInfo, Unit_Info_2, FPlayerUnitSelectInfo, Unit_Info_3);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnChangedAP, int32, CurrentAP);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnShowBackButton);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnShowPlayerUnitStatus, UTexture2D*, Icon, float, Percent);
 
 class USpringArmComponent;
 class UCameraComponent;
@@ -30,6 +31,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnShowBackButton OnShowBackButton;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnShowPlayerUnitStatus OnShowPlayerUnitStatus;
 
 protected:
 	virtual void BeginPlay() override;

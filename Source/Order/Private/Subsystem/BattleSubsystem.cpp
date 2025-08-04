@@ -25,6 +25,8 @@ void UBattleSubsystem::ActivateCurrentTurn()
 
 		Debug::Print("Begin Turn Activate");
 
+		TurnChange(EOrderTurnType::Player);
+
 		break;
 	case EOrderTurnType::Player:
 		UOrderFunctionLibrary::ToggleMouseEvent(this, true);

@@ -71,6 +71,10 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Unit|Icon", meta = (AllowPrivateAccess = "true"))
+	UTexture2D* UnitIcon;
+
 private:
 
 #pragma region Component
@@ -105,7 +109,4 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Unit|TeamType", meta = (AllowPrivateAccess = "true"))
 	EOrderTeamType Team = EOrderTeamType::Player;
-
-	UPROPERTY()
-	bool bIsClick = false;
 };

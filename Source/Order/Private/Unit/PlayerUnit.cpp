@@ -7,6 +7,7 @@
 #include "Component/UIComponent.h"
 #include "Component/StatusComponent.h"
 #include "UI/OrderUnitWidget.h"
+#include "Player/PlayerPawn.h"
 
 #include "DebugHelper.h"
 
@@ -26,6 +27,11 @@ void APlayerUnit::UnitClick(AActor* TouchedActor, FKey ButtonPressed)
 
 	APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
 	PC->SetViewTargetWithBlend(this, 0.45f);
+
+	APlayerPawn* Pawn = Cast<APlayerPawn>(PC->GetPawn());
+
+	float HPPsersent = GetStatusComponent()->GetUnitStat().HP / GetStatusComponent()->GetUnitStat().MaxHP;
+	Pawn->OnShowPlayerUnitStatus.Broadcast(UnitIcon, HPPsersent);
 }
 
 void APlayerUnit::BeginPlay()
