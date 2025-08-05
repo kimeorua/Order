@@ -31,6 +31,9 @@ struct FUnitStat
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float CriticalChance = 30.0f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int32 Speed = 3;
+
 	void Init();
 };
 

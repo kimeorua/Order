@@ -11,6 +11,8 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnShowUnitSelectUI, FPlayerUnitS
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnChangedAP, int32, CurrentAP);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnShowBackButton);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnShowPlayerUnitStatus, UTexture2D*, Icon, float, Percent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnInitButtonIcon, UTexture2D*, SkillIcon, UTexture2D*, AttackIcon);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnCommand, ABaseUnit*, Unit);
 
 class USpringArmComponent;
 class UCameraComponent;
@@ -34,6 +36,12 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnShowPlayerUnitStatus OnShowPlayerUnitStatus;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnInitButtonIcon OnInitButtonIcon;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnCommand OnCommand;
 
 protected:
 	virtual void BeginPlay() override;

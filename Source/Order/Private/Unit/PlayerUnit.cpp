@@ -8,6 +8,7 @@
 #include "Component/StatusComponent.h"
 #include "UI/OrderUnitWidget.h"
 #include "Player/PlayerPawn.h"
+#include "Component/CombatComponent.h"
 
 #include "DebugHelper.h"
 
@@ -32,6 +33,9 @@ void APlayerUnit::UnitClick(AActor* TouchedActor, FKey ButtonPressed)
 
 	float HPPsersent = GetStatusComponent()->GetUnitStat().HP / GetStatusComponent()->GetUnitStat().MaxHP;
 	Pawn->OnShowPlayerUnitStatus.Broadcast(UnitIcon, HPPsersent);
+	
+	Pawn->OnInitButtonIcon.Broadcast(GetCombatComponent()->GetSkillIcon(), GetCombatComponent()->GetAttackIcon());
+	Pawn->OnCommand.Broadcast(this);
 }
 
 void APlayerUnit::BeginPlay()

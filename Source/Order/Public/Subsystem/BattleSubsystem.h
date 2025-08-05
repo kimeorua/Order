@@ -9,6 +9,25 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnChangeTurn, EOrderTurnType, CurrentTurn);
 
+class ABaseUnit;
+
+UENUM(BlueprintType)
+enum class EOrderCommandType : uint8
+{
+	Attack UMETA(DisplayName = "Attack"),
+	Skill UMETA(DisplayName = "Skill")
+};
+
+USTRUCT(BlueprintType)
+struct FUnitBattleCommand
+{
+	GENERATED_BODY()
+
+	ABaseUnit* Unit;
+	EOrderCommandType CommandType = EOrderCommandType::Attack;
+};
+
+
 UCLASS()
 class ORDER_API UBattleSubsystem : public UGameInstanceSubsystem
 {
@@ -24,9 +43,15 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnChangeTurn OnChangeTurn;
 
+	UFUNCTION(BlueprintCallable)
+	void AddUnitSequence(ABaseUnit* Unit, EOrderCommandType CommandType);
+
 private:
 	UPROPERTY()
 	EOrderTurnType CurrentTurnType = EOrderTurnType::None;
 
 	void ActivateCurrentTurn();
+
+	UPROPERTY()
+	TArray<FUnitBattleCommand>UnitBattleSequence;
 };

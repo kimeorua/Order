@@ -3,6 +3,8 @@
 
 #include "Subsystem/BattleSubsystem.h"
 #include "OrderFunctionLibrary.h"
+#include "Unit/BaseUnit.h"
+#include "Component/StatusComponent.h"
 
 #include "DebugHelper.h"
 
@@ -48,4 +50,20 @@ void UBattleSubsystem::TurnChange(EOrderTurnType TurnType)
 
 	ActivateCurrentTurn();
 	OnChangeTurn.Broadcast(CurrentTurnType);
+}
+
+void UBattleSubsystem::AddUnitSequence(ABaseUnit* Unit, EOrderCommandType CommandType)
+{
+	FUnitBattleCommand UnitBattleCommand;
+	UnitBattleCommand.Unit = Unit;
+	UnitBattleCommand.CommandType = CommandType;
+
+	UnitBattleSequence.Add(UnitBattleCommand);
+
+	UnitBattleSequence.Sort([](const FUnitBattleCommand& A, const FUnitBattleCommand& B){return A.Unit->GetStatusComponent()->GetUnitStat().Speed > B.Unit->GetStatusComponent()->GetUnitStat().Speed;});
+
+	for (FUnitBattleCommand Test : UnitBattleSequence)
+	{
+		Debug::Print("Unit : " + Test.Unit->GetActorNameOrLabel() + " Speed : ", Test.Unit->GetStatusComponent()->GetUnitStat().Speed);
+	}
 }
